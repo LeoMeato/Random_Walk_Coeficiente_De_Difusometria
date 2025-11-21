@@ -6,7 +6,7 @@ from Matrix import Matrix
 pygame.init()
 
 # Create window
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 500, 500
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Basic Pygame Window")
 
@@ -14,10 +14,10 @@ RED = (255, 0, 0)
 
 # rect = pygame.Rect(30, 30, 60, 40)
 matrix = Matrix(
-    width=80,
-    height=60,
+    width=100,
+    height=100,
     screen=screen,
-    cell_size=10
+    cell_size=5
 )
 
 # Clock to control FPS

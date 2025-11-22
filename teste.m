@@ -1,0 +1,72 @@
+clear
+
+num_linhas = 1000;
+num_colunas = 1000;
+num_particulas = 1000;
+matriz = gera_mapa(num_linhas);
+max_passos = 100;
+
+passo_atual = 0;
+x = zeros(1, num_particulas);
+y = zeros(1, num_particulas);
+vel = zeros(1, num_particulas);
+
+passo_medicao = 10;
+total_medicoes = floor(max_passos / passo_medicao);
+vel_media = zeros(1, total_medicoes);
+
+for ii=1:num_particulas
+  pos = gera_pos_i(matriz);
+  x(ii) = pos(1);
+  y(ii) = pos(2);
+endfor
+
+
+xvet = x;
+yvet = y;
+xiter = x;
+yiter = y;
+
+% vetorizado
+
+tic
+while passo_atual < max_passos
+  passo_atual += 1;
+
+  [xvet, yvet] = anda_1_passo(xvet, yvet, matriz, num_particulas, 1);
+
+  if mod(passo_atual, passo_medicao) == 0
+    vel_media(floor(passo_atual / passo_medicao)) = sum(vel)/num_particulas;
+  endif
+
+endwhile
+toc
+
+
+% iterado
+
+passo_atual = 0;
+tic
+while passo_atual < max_passos
+  passo_atual += 1;
+
+  for ii=1:num_particulas
+    dir = randi([0, 1]);
+    sentido = randi([0, 1]);
+    if sentido == 0
+      sentido = -1;
+    endif
+    if dir == 0 && matriz(xiter(ii) + sentido, yiter(ii)) == 0
+      xiter(ii) += sentido;
+    elseif dir == 1 && matriz(xiter(ii), yiter(ii) + sentido) == 0
+      yiter(ii) += sentido;
+    endif
+  endfor
+
+  if mod(passo_atual, passo_medicao) == 0
+    vel_media(floor(passo_atual / passo_medicao)) = sum(vel)/num_particulas;
+  endif
+
+endwhile
+toc
+

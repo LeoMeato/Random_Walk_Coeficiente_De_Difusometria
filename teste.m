@@ -1,10 +1,10 @@
 clear
 
-num_linhas = 1000;
-num_colunas = 1000;
-num_particulas = 1000;
+num_linhas = 10;
+num_colunas = 10;
+num_particulas = 20;
 matriz = gera_mapa(num_linhas);
-max_passos = 100;
+max_passos = 20;
 
 passo_atual = 0;
 x = zeros(1, num_particulas);
@@ -35,7 +35,10 @@ while passo_atual < max_passos
 
   [xvet, yvet] = anda_1_passo(xvet, yvet, matriz, num_particulas, 1);
 
+  a = printa_particulas(xvet, yvet);
+
   if mod(passo_atual, passo_medicao) == 0
+    vel = sqrt((xvet - x).^2 + (yvet - y).^2);
     vel_media(floor(passo_atual / passo_medicao)) = sum(vel)/num_particulas;
   endif
 
@@ -46,6 +49,8 @@ toc
 % iterado
 
 passo_atual = 0;
+vel_media = zeros(1, total_medicoes);
+
 tic
 while passo_atual < max_passos
   passo_atual += 1;
@@ -60,6 +65,10 @@ while passo_atual < max_passos
       xiter(ii) += sentido;
     elseif dir == 1 && matriz(xiter(ii), yiter(ii) + sentido) == 0
       yiter(ii) += sentido;
+    endif
+    if mod(numpassos, passo_medicao) == 0
+      d = sqrt((xiter(ii) - x(ii))^2 + (yiter(ii) - y(ii))^2);
+      vel(ii) = d/passo_atual;
     endif
   endfor
 

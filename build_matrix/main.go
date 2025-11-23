@@ -53,9 +53,9 @@ func getRandInt(a int, b int) int {
 
 func main() {
 	var walkers []Walker;
-	var num_walkers int = 10000
+	var num_walkers int = 100000;
 	var n = 100;
-	var limite = 1000
+	var limite = 10000;
 	var m [][]int = createMatrix(n);
 	var marcacoes = limite / 10;
 	var pos_tempo = createPosMatrix(num_walkers, marcacoes)
@@ -73,7 +73,7 @@ func main() {
 		})
 	}
 
-	for i := 0; i < limite; i++ {
+	for i := 1; i <= limite; i++ {
 
 		for j, _ := range walkers {
 
@@ -94,37 +94,38 @@ func main() {
 				y_dir := getDir()
 
 				if walker.curr_pos.Y + y_dir > 0 && walker.curr_pos.Y + y_dir < n {
-					if m[walker.curr_pos.X][walker.curr_pos.Y] == 0 {
+					if m[walker.curr_pos.X][walker.curr_pos.Y + y_dir] == 0 {
 						walker.curr_pos.Y += y_dir
 					}
 				}
 			}
 
 			if i % 10 == 0 {
-				index := i / 10
+				index := (i-1) / 10
 				pos_tempo[j][index] = walker.curr_pos
 			}
 		}
 		
 		if i % 10 == 0 {
-			index := i / 10
+			index := (i-1) / 10
 			var soma_dist float64 = 0
 
 			for _, walker := range walkers {
 
-				x_dist := math.Pow(math.Abs(float64(walker.curr_pos.X) - float64(walker.init_pos.X)), 2);
-				y_dist := math.Pow(math.Abs(float64(walker.curr_pos.Y) - float64(walker.init_pos.Y)), 2);
+				x_dist := math.Pow(float64(walker.curr_pos.X) - float64(walker.init_pos.X), 2);
+				y_dist := math.Pow(float64(walker.curr_pos.Y) - float64(walker.init_pos.Y), 2);
 
-				soma_dist += math.Sqrt(x_dist + y_dist)
+				// soma_dist += math.Sqrt(x_dist + y_dist)
+				soma_dist = x_dist + y_dist
 			}
 
 			media_dist := soma_dist / float64(num_walkers)
 
-			p := float64(i)
-			if p == 0 {
-				p += 0.0001;
-			}
-			pontos[index] = media_dist / float64(p)
+			// p := float64(i)
+			// if p == 0 {
+			// 	p += 0.0001;
+			// }
+			pontos[index] = (media_dist / float64(i)) / 4
 		}
 
 		fmt.Printf("fim da iter: %d\n", i);

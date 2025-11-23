@@ -1,5 +1,5 @@
 n_matriz = 100;
-n_particulas = 1000;
+n_particulas = 100000;
 % M = gera_mapa(n_matriz);
 M = zeros(n_matriz, n_matriz);
 X = zeros(1, n_particulas);
@@ -21,6 +21,7 @@ Xi = X;
 Yi = Y;
 
 for numpassos=1:limite
+  disp(numpassos);
 
   for ii=1:n_particulas
 
@@ -67,14 +68,15 @@ for numpassos=1:limite
     endif
 
     if mod(numpassos, passo_medicao) == 0
-      d = sqrt((X(ii) - Xi(ii))^2 + (Y(ii) - Yi(ii))^2);
-      V(ii) = d;
+      V(ii) = (X(ii) - Xi(ii))^2 + (Y(ii) - Yi(ii))^2;
     endif
 
   endfor
 
   if mod(numpassos, passo_medicao) == 0
-    Vel_media(floor(numpassos / passo_medicao)) = (sum(V)/n_particulas)/numpassos;
+    media_dist = sum(V)/n_particulas;
+    coef = media_dist / (numpassos * 6);
+    Vel_media(floor(numpassos / passo_medicao)) = coef;
   endif
 
 endfor

@@ -38,7 +38,7 @@ while passo_atual < max_passos
   a = printa_particulas(xvet, yvet, num_linhas);
 
   if mod(passo_atual, passo_medicao) == 0
-    vel = sqrt((xvet - x).^2 + (yvet - y).^2);
+    vel = sqrt((xvet - x).^2 + (yvet - y).^2) / passo_atual;
     vel_media(floor(passo_atual / passo_medicao)) = sum(vel)/num_particulas;
   endif
 
@@ -83,6 +83,10 @@ while passo_atual < max_passos
 endwhile
 toc
 
-plot(1:total_medicoes, vel_media
+% plot(1:total_medicoes, vel_media)
 
 #}
+
+
+
+

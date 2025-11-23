@@ -35,7 +35,7 @@ while passo_atual < max_passos
 
   [xvet, yvet] = anda_1_passo(xvet, yvet, matriz, num_particulas, 1);
 
-  a = printa_particulas(xvet, yvet);
+  a = printa_particulas(xvet, yvet, num_linhas);
 
   if mod(passo_atual, passo_medicao) == 0
     vel = sqrt((xvet - x).^2 + (yvet - y).^2);
@@ -45,8 +45,12 @@ while passo_atual < max_passos
 endwhile
 toc
 
+% plot(1:total_medicoes, vel_media) % isso funciona? Aqui não
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % iterado
+
+#{
 
 passo_atual = 0;
 vel_media = zeros(1, total_medicoes);
@@ -66,7 +70,7 @@ while passo_atual < max_passos
     elseif dir == 1 && matriz(xiter(ii), yiter(ii) + sentido) == 0
       yiter(ii) += sentido;
     endif
-    if mod(numpassos, passo_medicao) == 0
+    if mod(passo_atual, passo_medicao) == 0
       d = sqrt((xiter(ii) - x(ii))^2 + (yiter(ii) - y(ii))^2);
       vel(ii) = d/passo_atual;
     endif
@@ -79,3 +83,6 @@ while passo_atual < max_passos
 endwhile
 toc
 
+plot(1:total_medicoes, vel_media
+
+#}

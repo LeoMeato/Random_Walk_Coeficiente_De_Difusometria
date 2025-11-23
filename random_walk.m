@@ -1,11 +1,21 @@
-n_matriz = 100;
-n_particulas = 100000;
+% para pegar nome de arquivo de args: nome_arquivo_matriz = sprintf("%s", argv(){1});
+nome_arquivo_matriz = "matrix_1.txt"
+delimitador = ","
+M = dlmread(nome_arquivo_matriz, delimitador)
+n_matriz = size(M)(1)
+
+% n_matriz = 1000;
 % M = gera_mapa(n_matriz);
-M = zeros(n_matriz, n_matriz);
+
+n_particulas = 100;
 X = zeros(1, n_particulas);
 Y = zeros(1, n_particulas);
 V = zeros(1, n_particulas);
-% numpassos = 0;
+
+dimensao = 2
+k = dimensao ^ 2
+
+numpassos = 0;
 limite = 1000;
 passo_medicao = 10;
 total_medicoes = floor(limite / passo_medicao);
@@ -20,8 +30,8 @@ endfor
 Xi = X;
 Yi = Y;
 
-for numpassos=1:limite
-  disp(numpassos);
+while numpassos < limite
+  numpassos += 1;
 
   for ii=1:n_particulas
 
@@ -30,41 +40,10 @@ for numpassos=1:limite
     if sentido == 0
       sentido = -1;
     endif
-
-    %{
     if dir == 0 && M(X(ii) + sentido, Y(ii)) == 0
       X(ii) += sentido;
     elseif dir == 1 && M(X(ii), Y(ii) + sentido) == 0
       Y(ii) += sentido;
-    endif
-    %}
-
-    if dir == 0
-
-      % andando para direita, tem que estar dentro da matriz e livre
-      if sentido == 1 && X(ii) + sentido <= n_matriz && M(X(ii) + sentido, Y(ii)) == 0
-        X(ii) += sentido;
-      endif
-
-      % andando para esquerda
-      if sentido == -1 && X(ii) + sentido >= 1 && M(X(ii) + sentido, Y(ii)) == 0
-        X(ii) += sentido;
-      endif
-
-    endif
-
-    if dir == 1
-
-      % andando para baixo, tem que estar dentro da matriz e livre
-      if sentido == 1 && Y(ii) + sentido <= n_matriz && M(X(ii), Y(ii) + sentido) == 0
-        Y(ii) += sentido;
-      endif
-
-      % andando para cima
-      if sentido == -1 && Y(ii) + sentido >= 1 && M(X(ii), Y(ii) + sentido) == 0
-        Y(ii) += sentido;
-      endif
-
     endif
 
     if mod(numpassos, passo_medicao) == 0
@@ -74,11 +53,10 @@ for numpassos=1:limite
   endfor
 
   if mod(numpassos, passo_medicao) == 0
-    media_dist = sum(V)/n_particulas;
-    coef = media_dist / (numpassos * 6);
-    Vel_media(floor(numpassos / passo_medicao)) = coef;
+    Vel_media(floor(numpassos / passo_medicao)) = (sum(V)/n_particulas) / (numpassos * k);
   endif
 
-endfor
 
-plot(1:total_medicoes, Vel_media);
+endwhile
+
+plot(1:total_medicoes, Vel_media)

@@ -122,7 +122,6 @@ class Matrix:
 
         with open(filename, "w") as f:
             for line in self.cells:
-                f.writelines([str(cell.value) for cell in line])
-                f.write("\n")
-
-             
+                line_str = ",".join([str(cell.value) for cell in line])
+                f.write(line_str + "\n")
+    

@@ -1,9 +1,20 @@
-n_matriz = 1000;
+% para pegar nome de arquivo de args: nome_arquivo_matriz = sprintf("%s", argv(){1});
+nome_arquivo_matriz = "matrix_1.txt"
+delimitador = ","
+M = dlmread(nome_arquivo_matriz, delimitador)
+n_matriz = size(M)(1)
+
+% n_matriz = 1000;
+% M = gera_mapa(n_matriz);
+
 n_particulas = 100;
-M = gera_mapa(n_matriz);
 X = zeros(1, n_particulas);
 Y = zeros(1, n_particulas);
 V = zeros(1, n_particulas);
+
+dimensao = 2
+k = dimensao ^ 2
+
 numpassos = 0;
 limite = 1000;
 passo_medicao = 10;
@@ -36,14 +47,13 @@ while numpassos < limite
     endif
 
     if mod(numpassos, passo_medicao) == 0
-      d = sqrt((X(ii) - Xi(ii))^2 + (Y(ii) - Yi(ii))^2);
-      V(ii) = d/numpassos;
+      V(ii) = (X(ii) - Xi(ii))^2 + (Y(ii) - Yi(ii))^2;
     endif
 
   endfor
 
   if mod(numpassos, passo_medicao) == 0
-    Vel_media(floor(numpassos / passo_medicao)) = sum(V)/n_particulas;
+    Vel_media(floor(numpassos / passo_medicao)) = (sum(V)/n_particulas) / (numpassos * k);
   endif
 
 

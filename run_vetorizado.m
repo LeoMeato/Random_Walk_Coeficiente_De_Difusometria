@@ -8,7 +8,7 @@ function [deslocamento_quadrado_medio, coeficiente_difusao] = run_vetorizado (ma
   vel_media = zeros(1, total_medicoes);
 
   deslocamento_quadrado_medio = zeros(1, total_medicoes); % msd
-  coeficiente_difusao = 0; % msd / 4max_passos
+  coeficiente_difusao = zeros(1, total_medicoes); % msd / 4max_passos
 
   for ii=1:num_particulas
     pos = gera_pos_i(matriz);
@@ -30,11 +30,13 @@ function [deslocamento_quadrado_medio, coeficiente_difusao] = run_vetorizado (ma
 
       deslocamento_quadrado = (x - xi).^2 + (y - yi).^2;
       deslocamento_quadrado_medio(floor(passo_atual / passo_medicao)) = sum(deslocamento_quadrado) / num_particulas;
+      coeficiente_difusao(floor(passo_atual / passo_medicao)) = (sum(deslocamento_quadrado) / num_particulas) / ((4 * passo_atual));
     endif
 
   endwhile
 
   % calcula coeficiente de difusão -> usa último desloc quad médio
-  coeficiente_difusao = deslocamento_quadrado_medio(end) / (4 * passo_atual);
+  % coeficiente_difusao = deslocamento_quadrado_medio(end) / (4 * passo_atual);
+
 
 

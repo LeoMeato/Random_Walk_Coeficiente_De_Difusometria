@@ -23,7 +23,7 @@ max_razao_passos = 10^3; % máximo de medições por run -> max_passos / passo_m
 max_particulas_passos = 10^9; % máximo de particulas * max_passos -> 1 Bi
 cont = 0;
 
-# {
+
 tipo_execucao = 'vet'
 
 for run = 1:num_runs
@@ -47,7 +47,7 @@ for run = 1:num_runs
 
               fprintf(FID, '%d, %d, %.0e, %.0e, %d, %s, %f, %f\n', ...
                       run, tam_matriz, num_particulas, max_passos, passo_medicao, ...
-                      tipo_execucao, tempo_total, coef_difusao);
+                      tipo_execucao, tempo_total, coef_difusao(end));
 
             endif
 
@@ -96,7 +96,7 @@ for run = 1:num_runs
 
               fprintf(FID, '%d, %d, %.0e, %.0e, %d, %s, %f, %f\n', ...
                       run, tam_matriz, num_particulas, max_passos, passo_medicao, ...
-                      tipo_execucao, tempo_total, coef_difusao);
+                      tipo_execucao, tempo_total, coef_difusao(end));
 
             endif
 

@@ -19,7 +19,7 @@ function [deslocamento_quadrado_medio, coeficiente_difusao] = run_iterativo (mat
   x = xi;
   y = yi;
 
-  while passo_atual < max_passos
+  while passo_atual <= max_passos
     passo_atual += 1;
 
     for ii=1:num_particulas
@@ -28,10 +28,14 @@ function [deslocamento_quadrado_medio, coeficiente_difusao] = run_iterativo (mat
       if sentido == 0
         sentido = -1;
       endif
-      if dir == 0 && matriz(x(ii) + sentido, y(ii)) == 0
-        x(ii) += sentido;
-      elseif dir == 1 && matriz(x(ii), y(ii) + sentido) == 0
-        y(ii) += sentido;
+      if dir == 0 && x(ii) + sentido >= 1 && x(ii) + sentido <= size(matriz)(1)
+        if matriz(x(ii) + sentido, y(ii)) == 0
+          x(ii) += sentido;
+        endif
+      elseif dir == 1 && y(ii) + sentido >= 1 && y(ii) + sentido <= size(matriz)(1)
+        if matriz(x(ii), y(ii) + sentido) == 0
+          y(ii) += sentido;
+        endif
       endif
       if mod(passo_atual, passo_medicao) == 0
         d = sqrt((xi(ii) - x(ii))^2 + (yi(ii) - y(ii))^2);

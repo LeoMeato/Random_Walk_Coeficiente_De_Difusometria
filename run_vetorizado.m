@@ -19,7 +19,7 @@ function [deslocamento_quadrado_medio, coeficiente_difusao] = run_vetorizado (ma
   x = xi;
   y = yi;
 
-  while passo_atual < max_passos
+  while passo_atual <= max_passos
     passo_atual += 1;
 
     [x, y] = anda_1_passo(x, y, matriz, num_particulas, 1);

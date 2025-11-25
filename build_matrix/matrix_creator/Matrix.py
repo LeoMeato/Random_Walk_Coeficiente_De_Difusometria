@@ -51,7 +51,7 @@ class Matrix:
         for line in self.cells:
             for cell in line:
                 cell.draw()
- 
+
     def change_cell_color(self, pos_x: int, pos_y):
         x = pos_x // self.cell_size
         y = pos_y // self.cell_size
@@ -125,3 +125,15 @@ class Matrix:
                 line_str = ",".join([str(cell.value) for cell in line])
                 f.write(line_str + "\n")
     
+    def read_from_file(self, filename: str):
+        with open(filename, "r") as f:
+            lines = f.readlines()
+            lines = [line.rstrip("\n").split(",") for line in lines]
+            # print(lines)
+            for i, line in enumerate(lines):
+                for j, value in enumerate(line):
+                    cell = self.cells[i][j]
+                    cell.value = int(value)
+                    cell.color = (0, 0, 0) if cell.value == 1 else (255, 255, 255)
+                    cell.draw()
+

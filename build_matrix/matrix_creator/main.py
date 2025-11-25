@@ -13,12 +13,17 @@ pygame.display.set_caption("Basic Pygame Window")
 RED = (255, 0, 0)
 
 # rect = pygame.Rect(30, 30, 60, 40)
+
 matrix = Matrix(
     width=100,
     height=100,
     screen=screen,
     cell_size=5
 )
+
+matrix_name = "matrix_5.txt"
+matrix.read_from_file(matrix_name)
+
 
 # Clock to control FPS
 clock = pygame.time.Clock()
@@ -31,7 +36,7 @@ color = (255, 0, 0)
 value = -1
 
 while running:
-    screen.fill((255, 255, 255))
+    # screen.fill((255, 255, 255))
     mouse_x, mouse_y = pygame.mouse.get_pos()
 
     # Handle events

@@ -10,11 +10,16 @@ function [deslocamento_quadrado_medio, coeficiente_difusao] = run_vetorizado (ma
   deslocamento_quadrado_medio = zeros(1, total_medicoes); % msd
   coeficiente_difusao = zeros(1, total_medicoes); % msd / 4max_passos
 
-  for ii=1:num_particulas
-    pos = gera_pos_i(matriz);
-    xi(ii) = pos(1);
-    yi(ii) = pos(2);
-  endfor
+  % pré-computa as posições livres para evitar sorteios repetidos em matrizes densas
+  [livre_y, livre_x] = find(matriz == 0);
+  livre_x = livre_x';
+  livre_y = livre_y';
+  if isempty(livre_x)
+    error('A matriz não possui células livres (valor 0) para iniciar as partículas.');
+  endif
+  indices_livres = randi(numel(livre_x), 1, num_particulas);
+  xi = livre_x(indices_livres);
+  yi = livre_y(indices_livres);
 
   x = xi;
   y = yi;

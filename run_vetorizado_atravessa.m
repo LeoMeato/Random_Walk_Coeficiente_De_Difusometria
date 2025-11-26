@@ -9,6 +9,7 @@ function [deslocamento_quadrado_medio, coeficiente_difusao] = run_vetorizado_atr
   %zi = zeros(1, num_particulas);
   travessia_x = zeros(1, num_particulas);
   travessia_y = zeros(1, num_particulas);
+  %travessia_z = zeros(1, num_particulas);
   vel = zeros(1, num_particulas);
   total_medicoes = floor(max_passos / passo_medicao);
   vel_media = zeros(1, total_medicoes);
